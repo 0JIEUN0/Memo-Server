@@ -53,14 +53,13 @@ class PostServiceTest {
         }
         postService.save(PostSaveRequestDto(userName = "user2", title = "t", content = "ct", time = "ti"))
 
-        val results : List<Post> = postService.findByUser(userName)
+        val results : List<PostResponseDto> = postService.findByUser(userName)
 
         for(i in 1..results.size){
             assertThat(results[i-1].userName).isEqualTo(userName)
             assertThat(results[i-1].title).isEqualTo("title")
             assertThat(results[i-1].content).isEqualTo("content")
             assertThat(results[i-1].time).isEqualTo("time")
-            println(results[i-1].userName)
         }
 
 

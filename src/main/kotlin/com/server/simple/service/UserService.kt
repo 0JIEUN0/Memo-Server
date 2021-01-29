@@ -4,6 +4,7 @@ import com.server.simple.domain.post.Post
 import com.server.simple.domain.user.User
 import com.server.simple.domain.user.UserRepository
 import com.server.simple.web.dto.PostSaveRequestDto
+import com.server.simple.web.dto.UserResponseDto
 import com.server.simple.web.dto.UserSaveRequestDto
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
@@ -19,8 +20,8 @@ class UserService (val userRepository: UserRepository ){
     }
 
     @Transactional
-    fun findUserByName(userName: String) : User {
-        return userRepository.findByName(userName)
+    fun findUserByName(userName: String) : UserResponseDto {
+        return UserResponseDto(userRepository.findByName(userName))
     }
 
 }

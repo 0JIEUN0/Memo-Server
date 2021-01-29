@@ -8,6 +8,11 @@ class UserResponseDto(
     var postNum: Int
 ) {
 
+    constructor(entity: User) : this (
+        name = entity.name,
+        postNum = entity.postNum
+    )
+
     fun toEntity() : User {
         return User(
             id = this.id,

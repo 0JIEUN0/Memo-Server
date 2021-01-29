@@ -8,17 +8,17 @@ class PostSaveRequestDto (
     var title: String,
     var content: String,
     var time: String
-    ){
+){
 
-        fun toEntity() : Post {
-            return Post (
-                id = this.id,
-                userName = this.userName,
-                title = this.title,
-                content = this.content,
-                time = this.time
-            )
-        }
-
-
+    fun toEntity() : Post {
+        return Post (
+            id = this.id,
+            userName = this.userName,
+            title = this.title,
+            content = this.content,
+            time = this.time
+        )
     }
+
+
+}
