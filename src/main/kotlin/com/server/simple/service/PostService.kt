@@ -2,9 +2,12 @@ package com.server.simple.service
 
 import com.server.simple.domain.post.Post
 import com.server.simple.domain.post.PostRepository
+import com.server.simple.web.dto.PostResponseDto
 import com.server.simple.web.dto.PostSaveRequestDto
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
+import java.util.stream.Collector
+import java.util.stream.Collectors
 import javax.transaction.Transactional
 
 @RequiredArgsConstructor
@@ -18,8 +21,10 @@ class PostService (val postRepository: PostRepository){
     }
 
     @Transactional
-    fun findByUser(userName: String) : List<Post> {
-        return postRepository.findByName(userName)
+    fun findByUser(userName: String) : List<PostResponseDto> {
+        return postRepository.findByName(userName).stream()
+            .map { PostResponseDto(it) }
+            .collect(Collectors.toList())
     }
 
 }
