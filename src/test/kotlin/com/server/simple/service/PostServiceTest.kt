@@ -40,7 +40,6 @@ class PostServiceTest {
         assertThat(result.userName).isEqualTo(userName)
         assertThat(result.title).isEqualTo(title)
         assertThat(result.content).isEqualTo(content)
-        assertThat(result.time).isEqualTo(time)
 
     }
 
@@ -57,9 +56,10 @@ class PostServiceTest {
 
         val results : List<PostResponseDto> = postService.findByUser(userName)
 
-        for(i in 1..results.size){
-            assertThat(results[i-1].userName).isEqualTo(userName)
-            assertThat(results[i-1].title).isEqualTo("title")
+        assertThat(results.size).isEqualTo(num)
+        results.forEach {
+            assertThat(it.userName).isEqualTo(userName)
+            assertThat(it.title).isEqualTo("title")
         }
     }
 
@@ -69,10 +69,11 @@ class PostServiceTest {
         postService.save(PostSaveRequestDto(userName = "user2", title = "t", content = "ct", time = Date()))
 
         val results: ResponseEntity<List<PostResponseDto>> = postService.findAllPosts()
-        assertThat(results.body.size).isEqualTo(2)
-        for(i in 1..results.body.size){
-            assertThat(results.body[i-1].userName).isEqualTo("user2")
+
+        val listOfUser2 = results.body.filter {
+            it.userName == "user2"
         }
+        assertThat(listOfUser2.size).isEqualTo(2)
 
     }
 
@@ -83,10 +84,16 @@ class PostServiceTest {
         postService.save(PostSaveRequestDto(userName = "user2", title = "third", content = "ct", time = Date()))
 
         val results: List<PostResponseDto> = postService.findAllByTimeAsc().body
-        assertThat(results.size).isEqualTo(3)
-        assertThat(results[0].title).isEqualTo("first")
-        assertThat(results[1].title).isEqualTo("second")
-        assertThat(results[2].title).isEqualTo("third")
+
+        val listOfUser2 = results.filter {
+            it.userName == "user2"
+        }
+        assertThat(listOfUser2.size).isEqualTo(3)
+
+
+        assertThat(listOfUser2[0].title).isEqualTo("first")
+        assertThat(listOfUser2[1].title).isEqualTo("second")
+        assertThat(listOfUser2[2].title).isEqualTo("third")
     }
 
     @Test
@@ -96,7 +103,7 @@ class PostServiceTest {
         postService.save(PostSaveRequestDto(userName = "user2", title = "third", content = "ct", time = Date()))
 
         val results: List<PostResponseDto> = postService.findAllByTimeDesc().body
-        assertThat(results.size).isEqualTo(3)
+
         assertThat(results[0].title).isEqualTo("third")
         assertThat(results[1].title).isEqualTo("second")
         assertThat(results[2].title).isEqualTo("first")

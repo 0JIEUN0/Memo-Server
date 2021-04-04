@@ -18,7 +18,7 @@ class PostApiController (val postService: PostService){
     }
 
     @GetMapping("/api/v1/posts")
-    fun findAllPostsAsc() : ResponseEntity<List<PostResponseDto>> {
+    fun findAllPostsDesc() : ResponseEntity<List<PostResponseDto>> {
         return postService.findAllByTimeDesc()
     }
 

@@ -15,13 +15,9 @@ class PostConfigurationComponentTest {
     @Autowired
     lateinit var postRepository: PostRepository
 
-    @Autowired
-    lateinit var postConfigurationComponent: PostConfigurationComponent
-
     @Test
     fun testInit() {
-        postConfigurationComponent.initPosts()
-
+        //initial data size = 100
         assertThat(postRepository.findAll().size).isEqualTo(100)
     }
 }

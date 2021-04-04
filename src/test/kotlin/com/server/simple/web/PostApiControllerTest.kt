@@ -104,7 +104,6 @@ class PostApiControllerTest {
             assertThat(it.userName).isEqualTo(userName)
             assertThat(it.title).isEqualTo("title")
             assertThat(it.content).isEqualTo("content")
-            assertThat(it.time).isEqualTo("time")
         }
 
     }
@@ -116,6 +115,12 @@ class PostApiControllerTest {
 
         val url = "http://localhost:$port/api/v1/posts"
         var responseEntity : ResponseEntity<Array<PostResponseDto>> = restTemplate.getForEntity(url, Array<PostResponseDto>::class.java)
+
+        val results : Array<PostResponseDto> = responseEntity.body
+        val listOfUser2 = results.filter {
+            it.userName == "user2"
+        }
+        assertThat(listOfUser2.size).isEqualTo(2)
 
         /*
         mockMvc.perform(
@@ -129,16 +134,24 @@ class PostApiControllerTest {
 
          */
 
-        assertThat(responseEntity.body.size).isEqualTo(2)
+    }
 
+    @Test
+    fun testFindAllByTimeDesc() {
+        postRepository.save(Post(userName = "user2", title = "first", content = "ct", time = Date()))
+        postRepository.save(Post(userName = "user2", title = "second", content = "ct", time = Date()))
 
-        val results : Array<PostResponseDto> = responseEntity.body
+        val url = "http://localhost:$port/api/v1/posts"
+        var responseEntity: ResponseEntity<Array<PostResponseDto>> =
+            restTemplate.getForEntity(url, Array<PostResponseDto>::class.java)
 
-        assertThat(results.size).isEqualTo(2)
-        results.forEach{
-            assertThat(it.userName).isEqualTo("user2")
+        val results: Array<PostResponseDto> = responseEntity.body
+        val listOfUser2 = results.filter {
+            it.userName == "user2"
         }
-
+        assertThat(listOfUser2.size).isEqualTo(2)
+        assertThat(listOfUser2[0].title).isEqualTo("second")
+        assertThat(listOfUser2[1].title).isEqualTo("first")
     }
 
 }

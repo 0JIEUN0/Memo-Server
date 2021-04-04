@@ -23,16 +23,14 @@ class PostRepositoryTest {
         var userName = "name"
         var title : String = "title"
         var content : String = "content"
-        var time: String = "2021"
+        var time: Date =  Date()
 
-        postRepository.save(Post(userName = userName, title = title, content = content ,time = Date()))
+        postRepository.save(Post(userName = userName, title = title, content = content ,time =time))
 
 
-        var result: Post = postRepository.findAll().get(0)
+        var result: Post = postRepository.findByName(userName)[0]
         assertThat(result.userName).isEqualTo(userName)
         assertThat(result.title).isEqualTo(title)
         assertThat(result.content).isEqualTo(content)
-        assertThat(result.time).isEqualTo(time)
-
     }
 }
