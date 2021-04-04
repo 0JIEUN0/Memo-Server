@@ -7,4 +7,8 @@ import org.springframework.data.jpa.repository.Query
 interface PostRepository : JpaRepository<Post, Long>{
     @Query("FROM Post where userName= ?1")
     fun findByName(userName: String) : List<Post>
+
+    fun findAllByOrderByTimeAsc(): List<Post>
+
+    fun findAllByOrderByTimeDesc(): List<Post>
 }

@@ -1,5 +1,6 @@
 package com.server.simple.domain.post
 
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -17,7 +18,7 @@ class Post(
     @Column(length = 500, nullable = false)
     var content : String,
 
-    var time: String
+    var time: Date
 
             ){
 }

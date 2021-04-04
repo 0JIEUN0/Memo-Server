@@ -55,6 +55,7 @@ dependencies {
     compile("com.h2database:h2")
     compileOnly("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation(kotlin("test-junit"))
+    implementation("com.googlecode.json-simple:json-simple:1.1.1")
 }
 
 tasks.test {

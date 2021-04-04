@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 import org.assertj.core.api.Assertions.assertThat
+import java.util.*
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -24,7 +25,7 @@ class PostRepositoryTest {
         var content : String = "content"
         var time: String = "2021"
 
-        postRepository.save(Post(userName = userName, title = title, content = content ,time = time))
+        postRepository.save(Post(userName = userName, title = title, content = content ,time = Date()))
 
 
         var result: Post = postRepository.findAll().get(0)
